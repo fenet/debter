@@ -16,7 +16,7 @@
 //= require MDBootstrap/js/popper.min.js
 //= require MDBootstrap/js/bootstrap.js
 //= require flatpickr
-
+//= require cocoon
 
 $(document).on('turbolinks:load', function(){
 		

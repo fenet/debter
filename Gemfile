@@ -37,6 +37,9 @@ gem 'active_admin_theme', '~> 1.0', '>= 1.0.3'
 gem 'rails-assets-MDBootstrap', source: 'https://rails-assets.org'
 gem 'flatpickr', '~> 4.5', '>= 4.5.2.0'
 gem 'cancancan', '~> 2.3'
+gem 'cocoon', '~> 1.2', '>= 1.2.12'
+gem "selectize-rails"
+gem 'activeadmin_selectize'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
