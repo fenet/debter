@@ -6,6 +6,6 @@ class AdminUser < ApplicationRecord
 
   validates :full_name , :presence => true,
                           :length => { :maximum =>  25}
-  validates :company_name , :presence => true                    
+  # validates :company_name , :presence => true                    
 	validates :role,  :presence => true
 end
