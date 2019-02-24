@@ -1,6 +1,22 @@
 class Product < ApplicationRecord
+	before_create :randomize_id
+
 	##assocations
-	has_many :product_catagories
-  has_many :catagories, through: :product_catagories
-  accepts_nested_attributes_for :catagories, reject_if: :all_blank, allow_destroy: true
+	belongs_to :catagory
+	
+	## validation
+
+	validates :product_name , :presence => true,
+                          :length => { :maximum =>  50}
+  validates :unit_price , :presence => true                    
+	validates :quanity,  :presence => true
+  validates :created_by,  :presence => true
+  validates :catagory_id,  :presence => true
+
+  private
+  def randomize_id
+    begin
+      self.id = SecureRandom.random_number(1_000_000)
+    end while Product.where(id: self.id).exists?
+  end
 end

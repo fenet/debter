@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_21_125027) do
+ActiveRecord::Schema.define(version: 2019_02_23_143153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,24 +53,16 @@ ActiveRecord::Schema.define(version: 2019_02_21_125027) do
   end
 
   create_table "catagories", force: :cascade do |t|
-    t.bigint "admin_user_id"
-    t.string "catagory"
+    t.string "created_by", null: false
+    t.string "name"
+    t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_user_id"], name: "index_catagories_on_admin_user_id"
-  end
-
-  create_table "product_catagories", force: :cascade do |t|
-    t.bigint "product_id"
-    t.bigint "catagory_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["catagory_id"], name: "index_product_catagories_on_catagory_id"
-    t.index ["product_id"], name: "index_product_catagories_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
-    t.bigint "admin_user_id"
+    t.bigint "catagory_id"
+    t.string "created_by", null: false
     t.string "product_name", null: false
     t.string "photo"
     t.decimal "unit_price", null: false
@@ -81,12 +73,9 @@ ActiveRecord::Schema.define(version: 2019_02_21_125027) do
     t.string "type_of_sales"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_user_id"], name: "index_products_on_admin_user_id"
+    t.index ["catagory_id"], name: "index_products_on_catagory_id"
     t.index ["product_name"], name: "index_products_on_product_name"
   end
 
-  add_foreign_key "catagories", "admin_users"
-  add_foreign_key "product_catagories", "catagories"
-  add_foreign_key "product_catagories", "products"
-  add_foreign_key "products", "admin_users"
+  add_foreign_key "products", "catagories"
 end
