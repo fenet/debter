@@ -30,7 +30,7 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax ,:type_of_sa
   form do |f|
   	f.semantic_errors
     f.inputs "New Sales", :multipart => true do
-     #  f.input :created_by, as: :hidden, :input_html => { :value => current_admin_user.full_name}
+     f.input :created_by, as: :hidden, :input_html => { :value => current_admin_user.full_name}
     	# f.input :photo, :as => :file, :hint => f.product.photo.present? \
      #      ? image_tag(f.object.photo.url(:thumbnail))
      #      : content_tag(:span, "no cover page yet")
@@ -44,9 +44,9 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax ,:type_of_sa
      #      fields: [:name, :desc], display_name: 'name', minimum_input_length: 2,
      #      order_by: 'desc_asc'
       
-      column :customer_name 
-      column :phone_number 
-      column :address
+      f.input :customer_name 
+      f.input :phone_number 
+      f.input :address
       f.input :type_of_sales, :as => :select, :collection => ["normal", "credit"], :include_blank => false
       f.input :include_tax
       
@@ -69,8 +69,7 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax ,:type_of_sa
         row :created_by
         row :created_at
         row :updated_at
-     	end	
-      
+     	end	     
     end
     active_admin_comments
   end
