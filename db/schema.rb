@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_21_110811) do
+ActiveRecord::Schema.define(version: 2019_02_24_132806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,4 +52,39 @@ ActiveRecord::Schema.define(version: 2019_02_21_110811) do
     t.index ["role"], name: "index_admin_users_on_role"
   end
 
+  create_table "catagories", force: :cascade do |t|
+    t.string "created_by", null: false
+    t.string "name"
+    t.text "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.bigint "catagory_id"
+    t.string "created_by", null: false
+    t.string "product_name", null: false
+    t.string "photo"
+    t.decimal "unit_price", null: false
+    t.text "description"
+    t.string "serial_number"
+    t.integer "quanity", null: false
+    t.decimal "selling_price"
+    t.string "type_of_sales"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["catagory_id"], name: "index_products_on_catagory_id"
+    t.index ["product_name"], name: "index_products_on_product_name"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.bigint "product_id"
+    t.string "tag_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_tags_on_product_id"
+  end
+
+  add_foreign_key "products", "catagories"
+  add_foreign_key "tags", "products"
 end

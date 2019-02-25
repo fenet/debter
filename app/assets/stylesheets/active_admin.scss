@@ -17,6 +17,7 @@
 //
 //   .status_tag { background: #6090DB; }
 @import "wigu/active_admin_theme";
+// @import 'activeadmin/selectize_input';
 h3 {
   margin-top: 0px;
   margin-bottom: 0px;
@@ -28,3 +29,13 @@ h3 {
 .sidebar_section td{
 	text-align: center;
 }
+
+.tags h3{
+	margin-right: 18%;
+	display: inline !important;
+}
+
+.col-product_name, .col-tags {
+	text-align: center;
+}
+
