@@ -38,6 +38,8 @@ gem 'rails-assets-MDBootstrap', source: 'https://rails-assets.org'
 gem 'flatpickr', '~> 4.5', '>= 4.5.2.0'
 gem 'cancancan', '~> 2.3'
 gem 'cocoon', '~> 1.2', '>= 1.2.12'
+gem 'carrierwave', '~> 1.3', '>= 1.3.1'
+gem 'mini_magick', '~> 4.9', '>= 4.9.3'
 # gem "selectize-rails"
 # gem 'activeadmin_selectize'
 # Use Capistrano for deployment

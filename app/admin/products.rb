@@ -1,5 +1,5 @@
 ActiveAdmin.register Product do
-permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_cache,:serial_number,:selling_price,:type_of_sales, :catagory_id, :created_by
+permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_cache,:serial_number,:selling_price,:type_of_sales, :catagory_id, :created_by, tags_attributes: [:id, :tag_name, :_destroy]
 
   csv do
     column :id
@@ -25,9 +25,9 @@ permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_ca
     selectable_column
     column :id
     column "Product Image" do |i|
-    	if !i.photo.nil?
-    		image_tag(i.photo.url(:thumbnail))
-    	end
+    	
+    		image_tag(i.photo.url(:small_thumbnail)) if i.photo.present?
+    	
     end
     column "Product Name" do |n|
     	truncate(n.product_name, :line_width => 7)
@@ -59,6 +59,8 @@ permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_ca
   filter :created_by, as: :select, collection: -> {
     AdminUser.all.map { |user| [user.full_name, user.id] }
   }
+   filter :tags, as: :select, collection: -> { Tag.all.map { |tag| [tag.tag_name, tag.id] }
+  } 
 
   form do |f|
   	f.semantic_errors
@@ -67,17 +69,21 @@ permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_ca
     	f.input :photo, :as => :file, :hint => f.product.photo.present? \
           ? image_tag(f.object.photo.url(:thumbnail))
           : content_tag(:span, "no cover page yet")
-      # f.input :photo_cache, :as => :hidden 
+      f.input :photo_cache, :as => :hidden 
 	    f.input :product_name 
 	    f.input :description
 	    f.input :unit_price
 	    f.input :quanity
+      f.input :serial_number, label: "Serial Number Or Any Identification"
 	    f.input :catagory_id, as: :search_select, url: admin_catagories_path,
           fields: [:name, :desc], display_name: 'name', minimum_input_length: 2,
           order_by: 'desc_asc'
-	    f.input :serial_number, label: "Serial Number Or Any Identification"
+      f.has_many :tags, allow_destroy: true, new_record: true, sortable_start: 3 do |a|
+          a.input :tag_name
+        end
       f.input :type_of_sales,  :as => :select, :collection => ["Felxiable", "Fixed"], :include_blank => false
       f.input :selling_price
+      
     end
     f.actions
   end
@@ -95,7 +101,7 @@ permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_ca
           catagory = Catagory.find(c.catagory_id)
           catagory.name
         end  
-	     	row :product_name
+        row :product_name
 	     	row :id
         row :description
 	     	number_row :unit_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
@@ -109,7 +115,18 @@ permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_ca
         row :created_at
         row :updated_at
      	end	
-      active_admin_comments
+      
+    end
+    active_admin_comments
+  end
+
+  sidebar "Tags In This Product", :only => :show do
+    table_for product.tags do
+
+      column "Tags" do |tag|
+        tag.tag_name
+      end
+
     end
   end
 end

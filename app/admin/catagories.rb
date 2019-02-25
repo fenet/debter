@@ -1,5 +1,5 @@
 ActiveAdmin.register Catagory do
-permit_params  :name, :desc, :created_by
+  permit_params  :name, :desc, :created_by
 
   csv do
     column :id
@@ -61,19 +61,19 @@ permit_params  :name, :desc, :created_by
       end 
       
     end
+
     active_admin_comments
   end
 
   sidebar "Products In This Catagory", :only => :show do
-    attributes_table_for catagory do
-      
-        catagory.products.each do |pro|
-          row "Products" do |pro|
-            pro.product_name
-          end
-        end
-      
+    table_for catagory.products do
+
+      column "Product name" do |product|
+        product.product_name
+      end
+
     end
   end
+
 
 end

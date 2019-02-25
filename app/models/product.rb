@@ -3,7 +3,8 @@ class Product < ApplicationRecord
 
 	##assocations
 	belongs_to :catagory
-	
+	has_many :tags
+  accepts_nested_attributes_for :tags, reject_if: :all_blank, allow_destroy: true
 	## validation
 
 	validates :product_name , :presence => true,
@@ -12,6 +13,10 @@ class Product < ApplicationRecord
 	validates :quanity,  :presence => true
   validates :created_by,  :presence => true
   validates :catagory_id,  :presence => true
+
+  #mounting uploader
+  
+  mount_uploader :photo, PhotoUploader
 
   private
   def randomize_id
