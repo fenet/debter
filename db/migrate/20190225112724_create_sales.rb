@@ -7,7 +7,7 @@ class CreateSales < ActiveRecord::Migration[5.2]
     	t.boolean :include_tax
     	t.string :type_of_sales
     	t.decimal :total_prce
-
+    	t.string :created_by, null: false
       t.timestamps
     end
   end

@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 2019_02_25_112724) do
     t.boolean "include_tax"
     t.string "type_of_sales"
     t.decimal "total_prce"
+    t.string "created_by", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
