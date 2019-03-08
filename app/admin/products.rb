@@ -50,6 +50,7 @@ permit_params :product_name,:description,:unit_price,:quantity, :photo, :photo_c
 
   filter :product_name
   filter :id
+  filter :serial_number
   filter :catagory_id, as: :search_select_filter, url: proc { admin_catagories_path },
          fields: [:name, :description], display_name: 'name', minimum_input_length: 2,
          order_by: 'desc_asc'
