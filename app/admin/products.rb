@@ -1,5 +1,6 @@
 ActiveAdmin.register Product do
-permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_cache,:serial_number,:selling_price,:type_of_sales, :catagory_id, :created_by, tags_attributes: [:id, :tag_name, :_destroy]
+  menu label: "Stock"
+permit_params :product_name,:description,:unit_price,:quantity, :photo, :photo_cache,:serial_number,:selling_price,:type_of_sales, :catagory_id, :created_by, tags_attributes: [:id, :tag_name, :_destroy]
 
   csv do
     column :id
@@ -11,7 +12,7 @@ permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_ca
     column :description
     column :unit_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
     column :selling_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
-    column :quanity
+    column :quantity
     column "Serial Number Or Any Identification" do |s|
       s.serial_number
     end
@@ -36,7 +37,7 @@ permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_ca
       catagory = Catagory.find(c.catagory_id)
       catagory.name
     end  
-    number_column :quanity
+    number_column :quantity
     
     number_column :unit_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
     column :created_by
@@ -52,7 +53,7 @@ permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_ca
   filter :catagory_id, as: :search_select_filter, url: proc { admin_catagories_path },
          fields: [:name, :description], display_name: 'name', minimum_input_length: 2,
          order_by: 'desc_asc'
-  filter :quanity
+  filter :quantity
   filter :unit_price, as: :numeric_range_filter
   # filter :catagory
   filter :created_at
@@ -61,6 +62,9 @@ permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_ca
   }
    filter :tags, as: :select, collection: -> { Tag.all.map { |tag| [tag.tag_name, tag.id] }
   } 
+
+  scope :total_stock
+  scope :recently_added
 
   form do |f|
   	f.semantic_errors
@@ -71,9 +75,9 @@ permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_ca
           : content_tag(:span, "no cover page yet")
       f.input :photo_cache, :as => :hidden 
 	    f.input :product_name 
-	    f.input :description
+	    f.input :description, :input_html => {:rows => 5, :cols => 20 }
 	    f.input :unit_price
-	    f.input :quanity
+	    f.input :quantity
       f.input :serial_number, label: "Serial Number Or Any Identification"
 	    f.input :catagory_id, as: :search_select, url: admin_catagories_path,
           fields: [:name, :desc], display_name: 'name', minimum_input_length: 2,
@@ -106,7 +110,7 @@ permit_params :product_name,:description,:unit_price,:quanity, :photo, :photo_ca
         row :description
 	     	number_row :unit_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
 	     	number_row :selling_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
-	     	row :quanity
+	     	row :quantity
 	     	row "Serial Number Or Any Identification" do |s|
           s.serial_number
       	end

@@ -63,8 +63,9 @@ ActiveRecord::Schema.define(version: 2019_02_25_194053) do
   create_table "product_items", force: :cascade do |t|
     t.bigint "product_id"
     t.bigint "sale_id"
-    t.decimal "saling_price"
-    t.integer "quanity", null: false
+    t.decimal "selling_price"
+    t.integer "pre_quantity"
+    t.integer "quantity", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_product_items_on_product_id"
@@ -79,7 +80,7 @@ ActiveRecord::Schema.define(version: 2019_02_25_194053) do
     t.decimal "unit_price", null: false
     t.text "description"
     t.string "serial_number"
-    t.integer "quanity", null: false
+    t.integer "quantity", null: false
     t.decimal "selling_price"
     t.string "type_of_sales"
     t.datetime "created_at", null: false
@@ -95,6 +96,8 @@ ActiveRecord::Schema.define(version: 2019_02_25_194053) do
     t.boolean "include_tax"
     t.string "type_of_sales"
     t.decimal "total_prce"
+    t.decimal "down_payment"
+    t.boolean "fully_payed"
     t.string "created_by", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
