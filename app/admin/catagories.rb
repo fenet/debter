@@ -40,7 +40,7 @@ ActiveAdmin.register Catagory do
     f.inputs do
       f.input :created_by, as: :hidden, :input_html => { :value => current_admin_user.full_name}
       f.input :name, label: "Catagory Name"
-      f.input :desc, label: "Description"
+      f.input :desc, label: "Description", :input_html => {:rows => 5, :cols => 20 }
     end
     f.actions
   end

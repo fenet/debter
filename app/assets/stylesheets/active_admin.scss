@@ -17,7 +17,9 @@
 //
 //   .status_tag { background: #6090DB; }
 @import "wigu/active_admin_theme";
-// @import 'activeadmin/selectize_input';
+
+
+
 h3 {
   margin-top: 0px;
   margin-bottom: 0px;
@@ -35,7 +37,41 @@ h3 {
 	display: inline !important;
 }
 
+.product_items h3{
+	margin-right: 13.2%;
+	display: inline !important;
+}
+
 .col-product_name, .col-tags {
 	text-align: center;
 }
 
+// .product_items a{
+// 	background: #d32f2f !important;
+// }
+
+// .product_items a:hover{
+// 	background: #d32f2f !important;
+// }
+
+.tags fieldset{
+
+    width: 1000px;
+    margin-left: 250px !important;
+
+}
+
+
+// status tag
+
+.normal{
+	background: #8daa92;
+}
+
+.down_sales{
+	background: #e29b20;
+}
+
+.credit{
+	background: #d45f53; 
+}

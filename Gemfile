@@ -30,7 +30,7 @@ gem 'jquery-rails'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 gem 'devise', '~> 4.6', '>= 4.6.1'
-gem 'activeadmin', '~> 1.4', '>= 1.4.3'
+gem 'activeadmin', '~> 1.3', '<= 1.3.1'
 gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'activeadmin_addons', '~> 1.7'
 gem 'active_admin_theme', '~> 1.0', '>= 1.0.3'
@@ -40,6 +40,7 @@ gem 'cancancan', '~> 2.3'
 gem 'cocoon', '~> 1.2', '>= 1.2.12'
 gem 'carrierwave', '~> 1.3', '>= 1.3.1'
 gem 'mini_magick', '~> 4.9', '>= 4.9.3'
+# gem 'active_admin_importable'
 # gem "selectize-rails"
 # gem 'activeadmin_selectize'
 # Use Capistrano for deployment
