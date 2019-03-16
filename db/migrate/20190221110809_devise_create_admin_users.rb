@@ -34,9 +34,9 @@ class DeviseCreateAdminUsers < ActiveRecord::Migration[5.2]
       ## admin info
       t.string :full_name, index: true, null: false
       t.string :company_name
-      t.string :tax_type
-      t.string :role, index: true, null: false
-      t.timestamps null: false
+      t.string :tax_type, :default => "TOT"
+      t.string :role, index: true, null: false, :default => "Employee"
+      t.timestamps 
     end
 
     add_index :admin_users, :email,                unique: true

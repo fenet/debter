@@ -11,7 +11,7 @@ class CreateProducts < ActiveRecord::Migration[5.2]
     	t.integer :quantity, null: false
     	t.decimal :selling_price
     	t.string :type_of_sales
-      t.timestamps
+        t.timestamps
     end
   end
 end
