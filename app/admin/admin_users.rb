@@ -28,12 +28,18 @@ ActiveAdmin.register AdminUser do
   filter :sign_in_count
   filter :created_at
 
+  scope :recently_added
+  scope :total_users
+  scope :owner
+  scope :employee
+
   form do |f|
     f.semantic_errors
     f.inputs do
       f.input :full_name
       f.input :role,  :as => :select, :collection => ["Owner", "Employee"], label: "Account Role", :include_blank => false
       f.input :email
+      f.input :current_password
       f.input :password
       f.input :password_confirmation
       f.input :company_name

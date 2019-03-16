@@ -17,6 +17,7 @@
 //
 //   .status_tag { background: #6090DB; }
 @import "wigu/active_admin_theme";
+
 h3 {
   margin-top: 0px;
   margin-bottom: 0px;
@@ -28,3 +29,80 @@ h3 {
 .sidebar_section td{
 	text-align: center;
 }
+
+.tags h3{
+	margin-right: 18%;
+	display: inline !important;
+}
+
+.product_items h3{
+	margin-right: 13.2%;
+	display: inline !important;
+}
+
+.col-product_name, .col-tags {
+	text-align: center;
+}
+
+// .product_items a{
+// 	background: #d32f2f !important;
+// }
+
+// .product_items a:hover{
+// 	background: #d32f2f !important;
+// }
+
+.tags fieldset{
+
+    width: 1000px;
+    margin-left: 250px !important;
+
+}
+
+
+// status tag
+
+.normal{
+	background: #8daa92;
+}
+
+.down_sales{
+	background: #e29b20;
+}
+
+.credit{
+	background: #d45f53; 
+}
+
+.total_sale{
+	background: #5ea3d3; 
+}
+.text-center{
+	text-align: center;
+}
+
+
+.btn a {
+	background-image: none;
+	border: none;
+	box-shadow: none;
+	text-shadow: none;
+	@include rounded($skinBorderRadius);
+	background-color: $skinMainSecondColor;
+	border: none;
+	color: #ffffff;
+	font-weight: 600;
+	&:hover {
+		background-color: lighten( $skinMainSecondColor, 5% )!important;
+	}
+
+}
+
+
+// div.tabs div.tab-content {
+//     background-color: #f7f9fb !important;
+//     border: 1px solid #f7f9fb !important;
+//     border-bottom: 2px solid #f7f9fb !important;
+//     border-radius: 4px;
+// }
+

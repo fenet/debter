@@ -11,8 +11,16 @@ class Ability
         can :manage, AdminUser 
         can :manage, ActiveAdmin::Page, name: "Dashboard", namespace_name: "admin"
         can :manage, ActiveAdmin::Comment
+        can :manage, Product
+        can :manage, Catagory
+        can :manage, Sale
+        can :manage, Expense
     when "Employee"
         can :read, ActiveAdmin::Page, name: "Dashboard", namespace_name: "admin" 
+        can :manage, Product
+        cannot :destroy, Product
+        can :manage, Sale
+        can :manage, Expense
         # can :manage, ActiveAdmin::Comment, resource_type: "Vacancy"
         # can :manage, ActiveAdmin::Comment, resource_type: "Order"
         # can :manage, ActiveAdmin::Comment, resource_type: "Product"
