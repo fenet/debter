@@ -1,8 +1,5 @@
 class ApplicationController < ActionController::Base
-	def home
-		render html: "hello"
-	end
-
+	
 	def access_denied(exception)
     flash[:error] = exception.message
     
