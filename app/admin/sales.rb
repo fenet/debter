@@ -1,5 +1,5 @@
 ActiveAdmin.register Sale do
-permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_by, :type_of_sales ,:total_prce, :down_payment, :fully_payed, product_items_attributes: [:id, :product_id, :selling_price,:quantity,:pre_quantity, :_destroy]
+permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_by, :type_of_sales ,:total_price, :down_payment, :fully_payed, product_items_attributes: [:id, :product_id, :selling_price,:quantity,:pre_quantity, :_destroy]
 
 
   csv do
@@ -14,13 +14,16 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
     column "Quantities" do |t|
       t.product_items.collect { |oi| oi.quantity}.sum
     end
-    column :total_prce, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
+    column :total_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
     column :include_tax
     column :type_of_sales
     column :down_payment, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
     column "Remaining Payment" do |py|
-      payment= py.total_prce - py.down_payment
-      number_to_currency payment, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
+
+      if !py.down_payment.nil?
+        payment= py.total_price - py.down_payment
+        number_to_currency payment, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
+      end
     end
     column :fully_payed
     column :customer_name 
@@ -74,7 +77,7 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
 	    end
       
       def show_page_title
-        @page_title = "#{Sale.find(params[:id]).total_prce} ETB"
+        @page_title = "#{Sale.find(params[:id]).total_price} ETB"
       end
   end
   
@@ -85,7 +88,7 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
         sale.products.limit(4).map { |e| e.product_name }.join(", ")
       end
     end
-    column "Quantities" do |t|
+    column "Quantities" , sortable: true do |t|
       t.product_items.collect { |oi| oi.quantity}.sum
     end
     # list_column :product_items
@@ -97,9 +100,9 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
     column :customer_name do |c|
       truncate( c.customer_name, :line_width => 7)
     end
-    number_column :total_prce, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
+    number_column :total_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
     column :created_by
-    column "Created" do |c|
+    column "Created", sortable: true do |c|
       c.created_at.strftime("%b %d, %Y")
     end 
     actions
@@ -109,7 +112,7 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
     Product.all.map { |product| [product.product_name, product.id] }
   }
   filter :customer_name
-  filter :total_prce, as: :numeric_range_filter
+  filter :total_price, as: :numeric_range_filter
   filter :type_of_sales, as: :select, :collection => ["Normal", "Credit","Down Sales"]
   filter :created_at
   filter :created_by, as: :select, collection: -> {
@@ -154,7 +157,7 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
     	attributes_table_for sale do
     		row :id
         
-        number_row :total_prce, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
+        number_row :total_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
         number_row "Total Products" do |s|
           s.products.count
         end
@@ -167,7 +170,7 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
         if sale.type_of_sales == "Down Sales"
           number_row :down_payment, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
           row "Remaining Payment" do |py|
-            payment= py.total_prce - py.down_payment
+            payment= (py.total_price - py.down_payment).abs if py.total_price != 0.0
             number_to_currency payment, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
           end
           row :fully_payed

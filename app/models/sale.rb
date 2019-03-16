@@ -8,7 +8,7 @@ class Sale < ApplicationRecord
 
 ## validation
                      
-    validates :total_prce,  :presence => true
+    validates :total_price,  :presence => true
 ## scope
 
     scope :recently_sold, lambda { where('created_at >= ?', 1.week.ago)}
@@ -17,7 +17,7 @@ class Sale < ApplicationRecord
     scope :credit_sale, lambda { where(:type_of_sales => "Credit") }
     scope :total_sold, lambda { order("created_at DESC")}
 
-  def total_prce
+  def total_price
     product_items.collect { |oi| oi.valid? ? (oi.quantity * oi.selling_price) : 0 }.sum
   end
 
@@ -25,6 +25,6 @@ class Sale < ApplicationRecord
   private
 
   def update_subtotal
-    self[:total_prce] = total_prce
+    self[:total_price] = total_price
   end
 end

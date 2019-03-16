@@ -18,11 +18,11 @@ ActiveAdmin.register Catagory do
   index do
     selectable_column
     column "Catagory Name", :name
-    column "Products" do |c|
-    	c.products.count
+    column "Products", sortable: true do |c|
+    	status_tag c.products.count, class: "total_sale"
     end
     column :created_by
-    column "Created At" do |c|
+    column "Created At", sortable: true do |c|
       c.created_at.strftime("%b %d, %Y")
     end
     actions
@@ -54,7 +54,7 @@ ActiveAdmin.register Catagory do
         end
         row :created_by
         row "Products in this catagory" do |c|
-          c.products.count
+          status_tag c.products.count, class: "total_sale" 
         end
         row :created_at
         row :updated_at

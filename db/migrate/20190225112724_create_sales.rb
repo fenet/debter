@@ -6,7 +6,7 @@ class CreateSales < ActiveRecord::Migration[5.2]
     	t.string :address
     	t.boolean :include_tax
     	t.string :type_of_sales
-    	t.decimal :total_prce
+    	t.decimal :total_price
       t.decimal :down_payment
       t.boolean :fully_payed
     	t.string :created_by, null: false

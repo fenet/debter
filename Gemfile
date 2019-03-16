@@ -40,6 +40,8 @@ gem 'cancancan', '~> 2.3'
 gem 'cocoon', '~> 1.2', '>= 1.2.12'
 gem 'carrierwave', '~> 1.3', '>= 1.3.1'
 gem 'mini_magick', '~> 4.9', '>= 4.9.3'
+gem 'chartkick', '~> 3.0', '>= 3.0.2'
+gem 'groupdate'
 # gem 'active_admin_importable'
 # gem "selectize-rails"
 # gem 'activeadmin_selectize'

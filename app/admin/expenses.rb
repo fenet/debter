@@ -5,7 +5,7 @@ permit_params :expense, :description, :price,:created_by
 
 	index do
 		selectable_column
-		column "Expense" do |e|
+		column "Expense", sortable: true do |e|
 			truncate(e.expense,  :length => 15)
 		end
 		column "Expense Description" do |e|
@@ -13,7 +13,7 @@ permit_params :expense, :description, :price,:created_by
 		end
 		number_column :price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
 		column :created_by
-		column "Created At" do |c|
+		column "Created At", sortable: true do |c|
       c.created_at.strftime("%b %d, %Y")
     end 
 		actions

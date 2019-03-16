@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 2019_03_08_063253) do
     t.string "address"
     t.boolean "include_tax"
     t.string "type_of_sales"
-    t.decimal "total_prce"
+    t.decimal "total_price"
     t.decimal "down_payment"
     t.boolean "fully_payed"
     t.string "created_by", null: false

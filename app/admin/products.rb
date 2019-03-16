@@ -30,10 +30,10 @@ permit_params :product_name,:description,:unit_price,:quantity, :photo, :photo_c
     		image_tag(i.photo.url(:small_thumbnail)) if i.photo.present?
     	
     end
-    column "Product Name" do |n|
+    column "Product Name", sortable: true do |n|
     	truncate(n.product_name, :line_width => 7)
     end 
-    column "Catagory" do |c|
+    column "Catagory", sortable: true do |c|
       catagory = Catagory.find(c.catagory_id)
       catagory.name
     end  
@@ -41,7 +41,7 @@ permit_params :product_name,:description,:unit_price,:quantity, :photo, :photo_c
     
     number_column :unit_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
     column :created_by
-    column "Created At" do |c|
+    column "Created At", sortable: true do |c|
       c.created_at.strftime("%b %d, %Y")
     end 
     actions
