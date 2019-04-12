@@ -8,7 +8,7 @@ permit_params :product_name,:description,:unit_price,:quantity, :photo, :photo_c
     column "Catagory" do |c|
       catagory = Catagory.find(c.catagory_id)
       catagory.name
-    end     
+    end
     column :description
     column :unit_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
     column :selling_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
@@ -26,24 +26,24 @@ permit_params :product_name,:description,:unit_price,:quantity, :photo, :photo_c
     selectable_column
     column :id
     column "Product Image" do |i|
-    	
+
     		image_tag(i.photo.url(:small_thumbnail)) if i.photo.present?
-    	
+
     end
     column "Product Name", sortable: true do |n|
     	truncate(n.product_name, :line_width => 7)
-    end 
+    end
     column "Catagory", sortable: true do |c|
       catagory = Catagory.find(c.catagory_id)
       catagory.name
-    end  
+    end
     number_column :quantity
-    
+
     number_column :unit_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
     column :created_by
     column "Created At", sortable: true do |c|
       c.created_at.strftime("%b %d, %Y")
-    end 
+    end
     actions
   end
 
@@ -62,7 +62,7 @@ permit_params :product_name,:description,:unit_price,:quantity, :photo, :photo_c
     AdminUser.all.map { |user| [user.full_name, user.id] }
   }
    filter :tags, as: :select, collection: -> { Tag.all.map { |tag| [tag.tag_name, tag.id] }
-  } 
+  }
 
   scope :total_stock
   scope :recently_added
@@ -74,8 +74,8 @@ permit_params :product_name,:description,:unit_price,:quantity, :photo, :photo_c
     	f.input :photo, :as => :file, :hint => f.product.photo.present? \
           ? image_tag(f.object.photo.url(:thumbnail))
           : content_tag(:span, "no cover page yet")
-      f.input :photo_cache, :as => :hidden 
-	    f.input :product_name 
+      f.input :photo_cache, :as => :hidden
+	    f.input :product_name
 	    f.input :description, :input_html => {:rows => 5, :cols => 20 }
 	    f.input :unit_price
 	    f.input :quantity
@@ -88,7 +88,7 @@ permit_params :product_name,:description,:unit_price,:quantity, :photo, :photo_c
         end
       f.input :type_of_sales,  :as => :select, :collection => ["Felxiable", "Fixed"], :include_blank => false
       f.input :selling_price
-      
+
     end
     f.actions
   end
@@ -105,7 +105,7 @@ permit_params :product_name,:description,:unit_price,:quantity, :photo, :photo_c
         row "Catagory" do |c|
           catagory = Catagory.find(c.catagory_id)
           catagory.name
-        end  
+        end
         row :product_name
 	     	row :id
         row :description
@@ -119,10 +119,14 @@ permit_params :product_name,:description,:unit_price,:quantity, :photo, :photo_c
         row :created_by
         row :created_at
         row :updated_at
-     	end	
-      
+     	end
+
     end
-    active_admin_comments
+    #active_admin_comments
+  end
+
+  action_item :new, only: :show do
+    link_to 'New Product', new_admin_product_path
   end
 
   sidebar "Tags In This Product", :only => :show do

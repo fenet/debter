@@ -47,22 +47,25 @@ ActiveAdmin.register Catagory do
 
   show title: :name do
     panel "Catagory" do
-      attributes_table_for catagory do        
+      attributes_table_for catagory do
         row :name
         row "Description" do |d|
           d.desc
         end
         row :created_by
         row "Products in this catagory" do |c|
-          status_tag c.products.count, class: "total_sale" 
+          status_tag c.products.count, class: "total_sale"
         end
         row :created_at
         row :updated_at
-      end 
-      
+      end
+
     end
 
-    active_admin_comments
+    #active_admin_comments
+  end
+  action_item :new, only: :show do
+    link_to 'New catagory', new_admin_catagory_path
   end
 
   sidebar "Products In This Catagory", :only => :show do

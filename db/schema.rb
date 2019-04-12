@@ -46,12 +46,10 @@ ActiveRecord::Schema.define(version: 2019_03_08_063253) do
     t.string "role", default: "Employee", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["created_at"], name: "index_admin_users_on_created_at"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["full_name"], name: "index_admin_users_on_full_name"
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
     t.index ["role"], name: "index_admin_users_on_role"
-    t.index ["updated_at"], name: "index_admin_users_on_updated_at"
   end
 
   create_table "catagories", force: :cascade do |t|
@@ -60,8 +58,6 @@ ActiveRecord::Schema.define(version: 2019_03_08_063253) do
     t.text "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["created_at"], name: "index_catagories_on_created_at"
-    t.index ["updated_at"], name: "index_catagories_on_updated_at"
   end
 
   create_table "expenses", force: :cascade do |t|

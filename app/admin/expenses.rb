@@ -1,6 +1,6 @@
 ActiveAdmin.register Expense do
 permit_params :expense, :description, :price,:created_by
-	
+
   scope :recently_added
 
 	index do
@@ -15,7 +15,7 @@ permit_params :expense, :description, :price,:created_by
 		column :created_by
 		column "Created At", sortable: true do |c|
       c.created_at.strftime("%b %d, %Y")
-    end 
+    end
 		actions
 	end
 
@@ -24,11 +24,15 @@ permit_params :expense, :description, :price,:created_by
   	f.semantic_errors
     f.inputs "new product", :multipart => true do
       f.input :created_by, as: :hidden, :input_html => { :value => current_admin_user.full_name}
-	    f.input :expense 
+	    f.input :expense
 	    f.input :description, :input_html => {:rows => 5, :cols => 20 }
-	    f.input :price    
+	    f.input :price
     end
     f.actions
+  end
+
+	action_item :new, only: :show do
+    link_to 'New Expense', new_admin_expense_path
   end
 
 end
