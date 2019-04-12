@@ -89,6 +89,6 @@ test:
 #
 production:
   <<: *default
-  database: hisab_production
-  username: hisab
+  database: selamhisab_production
+  username: selamhisab
   password: <%= ENV['HISAB_DATABASE_PASSWORD'] %>
