@@ -7,7 +7,7 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
       if !sale.product_ids.nil?
         sale.products.map { |e| e.product_name }.join(", ")
       end
-    end    
+    end
     column "Total Products" do |s|
       s.products.count
     end
@@ -26,7 +26,7 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
       end
     end
     column :fully_payed
-    column :customer_name 
+    column :customer_name
     column :phone_number
     column :address
     column :created_by
@@ -40,20 +40,20 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
      after_action :update_inventory_quantity, only: [:update]
      before_action :show_page_title, only: [:show]
 
-     private 
+     private
 	    def update_inventory_quantity
 	     	@sale.products.each do |product|
           product.product_items.each do |item|
-            if 
+            if
               if !item.pre_quantity.nil? && (item.pre_quantity != item.quantity)
                 item_quantity = (item.pre_quantity - item.quantity).abs
                 quantity = product.quantity - item_quantity
                 product.update_columns(quantity: quantity)
-                item.update_columns(pre_quantity: item.quantity)  
+                item.update_columns(pre_quantity: item.quantity)
               elsif item.pre_quantity.nil?
                 quantity = product.quantity - item.quantity
                 product.update_columns(quantity: quantity)
-                item.update_columns(pre_quantity: item.quantity)  
+                item.update_columns(pre_quantity: item.quantity)
               end
             end
           end
@@ -75,14 +75,14 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
 	     		end
 	     	end
 	    end
-      
+
       def show_page_title
         @page_title = "#{Sale.find(params[:id]).total_price} ETB"
       end
   end
-  
+
   index do
-    selectable_column 
+    selectable_column
     column "Products" do |sale|
       if !sale.product_ids.nil?
         sale.products.limit(4).map { |e| e.product_name }.join(", ")
@@ -104,7 +104,7 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
     column :created_by
     column "Created", sortable: true do |c|
       c.created_at.strftime("%b %d, %Y")
-    end 
+    end
     actions
   end
 
@@ -130,14 +130,14 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
     f.inputs "New Sales", :multipart => true do
 
      f.input :created_by, as: :hidden, :input_html => { :value => current_admin_user.full_name}
-      f.input :customer_name 
-      f.input :phone_number 
+      f.input :customer_name
+      f.input :phone_number
       f.input :address
       f.input :type_of_sales, :as => :select, :collection => ["Normal", "Credit","Down Sales"], :include_blank => false
       f.input :down_payment
       f.input :fully_payed
       f.input :include_tax
-      
+
     end
     f.has_many :product_items,remote: true , allow_destroy: true, new_record: true do |a|
       	a.input :product_id, as: :search_select, url: admin_products_path,
@@ -145,9 +145,9 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
           order_by: 'id_asc'
 
 	      a.input :selling_price, :required => true
-        # add max value 
+        # add max value
 	      a.input :quantity, :required => true, min: 1
-	      
+
 	      a.label :_destroy
     end
     f.actions
@@ -156,7 +156,7 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
     panel "Sales" do
     	attributes_table_for sale do
     		row :id
-        
+
         number_row :total_price, as: :currency, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
         number_row "Total Products" do |s|
           s.products.count
@@ -181,12 +181,12 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
         row :created_at
         row :updated_at
      	end
-           
+
     end
     panel "Products" do
       table_for sale.product_items.order('created_at ASC') do
           column "Products" do |item|
-            link_to image_tag(item.product.photo.url(:small_thumbnail)), [ :admin, item.product ]
+            link_to image_tag(item.product.photo.url(:small_thumbnail)), [ :admin, item.product ] if item.product.photo.present?
           end
           column "Products Name" do |item|
             link_to item.product.product_name, [ :admin, item.product ]
@@ -197,26 +197,31 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
           end
           column "Unit Price" do |item|
             number_to_currency item.product.unit_price, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
-          end 
+          end
 
           column " Initial Selling Price" do |item|
             number_to_currency item.product.selling_price, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
           end
           column "Sold Price" do |item|
             number_to_currency item.selling_price, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
-          end 
-          column :quantity  
+          end
+          column :quantity
           column "Total" do |item|
             total = item.selling_price * item.quantity
             number_to_currency total, unit: "ETB",  format: "%n %u" ,delimiter: "", precision: 2
-          end 
+          end
           column "added" do |item|
             item.created_at.strftime("%b %d, %Y")
-          end 
+          end
       end
     end
-    active_admin_comments
+    #active_admin_comments
   end
+
+  action_item :new, only: :show do
+    link_to 'New Sale', new_admin_sale_path
+  end
+  
   sidebar "Customer Information", :only => :show do
     attributes_table_for sale do
       row :customer_name

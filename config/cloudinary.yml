@@ -1,17 +1,17 @@
 ---
 development:
-  cloud_name: <%= ENV['CLOUD_NAME'] %>
-  api_key: <%= ENV['API_KEY'] %>
-  api_secret: <%= ENV['API_SECRET'] %>
-  secure: true
-  cdn_subdomain: true
+  cloud_name: <%= Rails.application.credentials.production[:cloud_name] %>
+  api_key: <%= Rails.application.credentials.production[:api_key] %>
+  api_secret: <%= Rails.application.credentials.production[:api_secret] %>
+  enhance_image_tag: <%= Rails.application.credentials.production[:enhance_image_tag] %>
+  static_image_support: <%= Rails.application.credentials.production[:enhance_image_support] %>
 
 test:
-  cloud_name: <%= ENV['CLOUD_NAME'] %>
-  api_key: <%= ENV['API_KEY'] %>
-  api_secret: <%= ENV['API_SECRET'] %>
-  secure: true
-  cdn_subdomain: true
+  cloud_name:  <%= Rails.application.credentials.production[:cloud_name] %>
+  api_key: <%= Rails.application.credentials.production[:api_key] %>
+  api_secret: <%= Rails.application.credentials.production[:api_secret] %>
+  enhance_image_tag: <%= Rails.application.credentials.production[:enhance_image_tag] %>
+  static_image_support: <%= Rails.application.credentials.production[:enhance_image_support] %>
 
 production:
   cloud_name: <%= Rails.application.credentials.production[:cloud_name] %>
