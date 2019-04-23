@@ -127,21 +127,12 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
 
   form do |f|
   	f.semantic_errors
-    f.inputs "New Sales", :multipart => true do
-
-     f.input :created_by, as: :hidden, :input_html => { :value => current_admin_user.full_name}
-      f.input :customer_name
-      f.input :phone_number
-      f.input :address
-      f.input :type_of_sales, :as => :select, :collection => ["Normal", "Credit","Down Sales"], :include_blank => false
-      f.input :down_payment
-      f.input :fully_payed
-      f.input :include_tax
-
+    if f.object.product_items.empty?
+      f.object.product_items << ProductItem.new
     end
-    f.has_many :product_items,remote: true , allow_destroy: true, new_record: true do |a|
+    f.has_many :product_items, remote: true, allow_destroy: true, new_record: true do |a|
       	a.input :product_id, as: :search_select, url: admin_products_path,
-          fields: [:product_name, :id], display_name: 'product_name', minimum_input_length: 3,
+          fields: [:product_name, :serial_number, :id], display_name: 'product_name', minimum_input_length: 3,
           order_by: 'id_asc'
 
 	      a.input :selling_price, :required => true
@@ -149,6 +140,20 @@ permit_params :customer_name ,:phone_number ,:address ,:include_tax , :created_b
 	      a.input :quantity, :required => true, min: 1
 
 	      a.label :_destroy
+
+    end
+
+    f.div "Sales Information"
+
+      f.inputs "", :multipart => true do
+      f.input :created_by, as: :hidden, :input_html => { :value => current_admin_user.full_name}
+      f.input :type_of_sales, :as => :select, :collection => ["Normal", "Credit","Down Sales"], :include_blank => false
+      f.input :include_tax
+      f.input :down_payment
+      f.input :fully_payed
+      f.input :customer_name
+      f.input :phone_number
+      f.input :address
     end
     f.actions
   end
