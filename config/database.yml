@@ -91,4 +91,4 @@ production:
   <<: *default
   database: debter_production
   username: debter
-  password: <%= ENV['HISAB_DATABASE_PASSWORD'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
