@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
-gem 'devise', '~> 4.6', '>= 4.6.1'
+gem 'devise', '~> 4.7'
 gem 'activeadmin', '~> 1.3', '<= 1.3.1'
 gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'activeadmin_addons', '~> 1.7'
