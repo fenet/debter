@@ -41,7 +41,7 @@ gem 'cocoon', '~> 1.2', '>= 1.2.12'
 gem 'carrierwave', '~> 1.3', '>= 1.3.1'
 gem 'mini_magick', '~> 4.9', '>= 4.9.3'
 gem 'cloudinary', '~> 1.11', '>= 1.11.1'
-gem 'chartkick', '~> 3.0', '>= 3.0.2'
+gem 'chartkick', '~> 3.3'
 gem 'groupdate'
 # gem 'active_admin_importable'
 # gem "selectize-rails"
